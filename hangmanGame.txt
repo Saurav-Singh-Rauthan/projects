@@ -1,0 +1,154 @@
+import random
+score=0
+
+def pluspoint() :
+    global score
+    score+=1
+    print("You won this round :) score after this round is",score)
+
+def gameOver():
+    global score
+    score-=1
+    print("You lost this round :( score after this round is",score)
+
+def check(ansVal):
+    v=0
+    for i in range(0,len(ansVal)):
+        if ansVal[i]=='_':
+            v+=1
+    if v!=0:
+        return 1
+    else:
+        return 0
+
+def giveword():
+    words=["abruptly","absurd","abyss","affix","askew","avenue","awkward","axiom","azure","bagpipes","bandwagon",
+            "banjo","bayou","beekeeper","bikini","blitz","blizzard","boggle","bookworm","boxcar"
+            ,'boxful','buckaroo','buffalo','buffoon','buxom','buzzard','buzzing','buzzwords','caliph','cobweb','cockiness','croquet','crypt','curacao','cycle',
+           'daiquiri','dirndl','disavow','dizzying','duplex','dwarves','embezzle','equip','espionage','euouae','exodus','faking','fishhook','fixable','fjord','flapjack',
+           'flopping','fluffiness','flyby','foxglove','frazzled','frizzled','fuchsia','funny','gabby','galaxy','galvanize','gazebo','giaour','gizmo','glowworm','glyph','gnarly',
+           'gnostic','gossip','grogginess','haiku','haphazard','hyphen','iatrogenic','icebox','injury','ivory','ivy','jackpot','jaundice','jawbreaker','jaywalk','jazziest','jazzy',
+          'jelly','jigsaw','jinx','jiujitsu','jockey','jogging','joking','jovial','joyful','juicy','jukebox','jumbo','kayak','kazoo','keyhole','khaki','kilobyte','kiosk','kitsch','kiwifruit',
+          'klutz','knapsack','larynx','lengths','lucky','luxury','lymph','marquis','matrix','megahertz','microwave','mnemonic','mystify','naphtha','nightclub','nowadays','numbskull','nymph',
+          'onyx','ovary','oxidize','oxygen','pajama','peekaboo','phlegm','pixel','pizazz','pneumonia','polka','pshaw','psyche','puppy','puzzling','quartz','queue','quips','quixotic','quiz','quizzes',
+          'quorum','razzmatazz','rhubarb','rhythm','rickshaw','schnapps','scratch','shiv','snazzy','sphinx','spritz','squawk','staff','strength','strengths','stretch','stronghold','stymied',
+          'subway','swivel','syndrome','thriftless','thumbscrew','topaz','transcript','transgress','transplant','triphthong','twelfth','twelfths','unknown','unworthy','unzip','uptownmvaporize',
+          'vixen','vodka','voodoo','vortex','voyeurism','walkway','waltz','wave','wavy','waxy','wellspring','wheezy','whiskey','whizzing','whomever','wimpy','witchcraft','wizard','woozy','wristwatch','wyvern','xylophone',
+          'yachtsman','yippee','yoked','youthful','yummy','zephyr','zigzag','zigzagging','zilch','zipper','zodiac','zombie']
+
+    a=random.randrange(0,len(words))
+    random.shuffle(words)
+    return words[a]
+
+def printit(ansVal):
+    for i in range(0,len(ansVal)):
+        print(ansVal[i],end=' ')
+
+def start():
+    global score
+    word=giveword()
+    wa=0
+    inc = len(word) // 2
+    occ=[" "]*inc
+    ansVal=["_" for i in range(0,len(word))]
+    for i in range(0,inc):
+        u=random.randrange(0,len(word))
+        ansVal[u]=word[u]
+        occ[i] = word[u]
+
+    points=0
+    printit(ansVal)
+    print("\t","wrong attempts",wa)
+    print(HANGMANPICS[wa])
+    while(wa<6):
+        flag=0
+        inp=input("enter character to be inserted ")
+        for i in range(0,len(word)):
+            if inp == word[i]:
+                ansVal[i]=word[i]
+                points+=1
+                flag+=1
+        if flag==0:
+            wa+=1
+        printit(ansVal)
+        print("\t","wrong attempts",wa)
+        print(HANGMANPICS[wa])
+        if check(ansVal)==0:
+            break
+
+    if wa==6:
+        gameOver()
+    else:
+        pluspoint()
+    print()
+
+def end():
+    global score
+    print()
+    print("thank you for playing the game hope you enjoyed ;) <3")
+    print("your final score is",score)
+
+HANGMANPICS = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
+
+
+
+print("##################################")
+print("Welcome to HANGM#N")
+print("         -Saurav")
+ans=1
+while(ans==1):
+    ans=int(input("enter 1 to start & 0 to end the game "))
+    if(ans==1):
+        start()
+    else:
+        end()
+print("##################################")
